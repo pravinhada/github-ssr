@@ -1,0 +1,11 @@
+# Following files need to be ignored while checking in to github
+
+# Dependencies directories
+node_modules
+
+# Build directories
+build
+public/js
+
+# IDE files
+.idea
