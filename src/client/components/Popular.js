@@ -3,13 +3,12 @@ import api from '../../utils/api';
 import RepoGrid from './RepoGrid';
 import Loading from './Loading';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 function SelectLanguage(props) {
-    const languages = ["All", "JavaScript", "Java", "Ruby", "CSS", "Python", "PHP"];
-
     return (
         <ul className="languages">
-            {languages.map(lang => {
+            {props.languages.map(lang => {
                 return (
                     <li style={lang == props.selectedLanguage ? {color: '#d0021b'} : null}
                         onClick={props.onSelect.bind(null, lang)}
@@ -20,9 +19,11 @@ function SelectLanguage(props) {
             })}
         </ul>
     );
+
 }
 
 SelectLanguage.propTypes = {
+    languages: PropTypes.array.isRequired,
     selectedLanguage: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired
 };
@@ -57,6 +58,7 @@ class Popular extends Component {
         return (
             <div className="center-align" style={{marginTop: '50'}}>
                 <SelectLanguage
+                    languages={this.props.languages}
                     selectedLanguage={this.state.selectedLanguage}
                     onSelect={this.updateLanguage}
                 />
@@ -67,6 +69,12 @@ class Popular extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        languages: state.languages
+    }
+}
+
 export default {
-    component: Popular
+    component: connect(mapStateToProps)(Popular)
 };
