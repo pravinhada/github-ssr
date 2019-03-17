@@ -7,10 +7,13 @@ import {Provider} from 'react-redux';
 import configureStore from '../client/redux/configureStore';
 import serialize from 'serialize-javascript';
 
-const languages = ["All", "JavaScript", "Java", "Ruby", "CSS", "Python", "PHP"];
+const state = {
+    languages: ["All", "JavaScript", "Java", "Ruby", "CSS", "Python", "PHP"],
+    selectedLanguage: "All"
+};
 
 export default (req) => {
-    const store = configureStore({languages: languages});
+    const store = configureStore(state);
     const content = renderToString(
         <Provider store={store}>
             <StaticRouter location={req.path} context={{}}>

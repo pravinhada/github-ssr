@@ -1,8 +1,8 @@
-export const FETCH_LANGUAGE = "fetch_language";
+export const SELECTED_LANGUAGE = "SELECTED_LANGUAGE";
 
-export const fetchLanguages = () => async (dispatch, getState) => {
+export const updateSelectedLanguage = (lang) => async (dispatch, getState) => {
     dispatch({
-        type: FETCH_LANGUAGE,
-        payload: getState.languages
+        type: SELECTED_LANGUAGE,
+        payload: lang
     })
 }

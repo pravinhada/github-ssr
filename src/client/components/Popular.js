@@ -4,6 +4,8 @@ import RepoGrid from './RepoGrid';
 import Loading from './Loading';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {updateSelectedLanguage} from "../redux/actions";
+
 
 function SelectLanguage(props) {
     return (
@@ -32,23 +34,22 @@ class Popular extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedLanguage: 'All',
             repos: null
         }
         this.updateLanguage = this.updateLanguage.bind(this);
     }
 
     componentDidMount() {
-        this.updateLanguage(this.state.selectedLanguage);
+        this.updateLanguage(this.props.selectedLanguage);
     }
 
     updateLanguage(lang) {
         this.setState(
             {
-                selectedLanguage: lang,
                 repos: null
             }
         );
+        this.props.updateSelectedLanguage(lang);
         api.fetchPopularRepos(lang).then(repos =>
             this.setState({repos: repos})
         );
@@ -59,7 +60,7 @@ class Popular extends Component {
             <div className="center-align" style={{marginTop: '50'}}>
                 <SelectLanguage
                     languages={this.props.languages}
-                    selectedLanguage={this.state.selectedLanguage}
+                    selectedLanguage={this.props.selectedLanguage}
                     onSelect={this.updateLanguage}
                 />
                 {!this.state.repos ? <Loading/> :
@@ -71,10 +72,11 @@ class Popular extends Component {
 
 function mapStateToProps(state) {
     return {
-        languages: state.languages
+        languages: state.languages,
+        selectedLanguage: state.selectedLanguage
     }
 }
 
 export default {
-    component: connect(mapStateToProps)(Popular)
+    component: connect(mapStateToProps, {updateSelectedLanguage})(Popular)
 };
