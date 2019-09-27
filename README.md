@@ -7,5 +7,3 @@ Required data store:
 2. Language Selected
 3. Repo for the selected language
 
-
-this is only for exercise purpose.
